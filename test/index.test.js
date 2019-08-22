@@ -12,4 +12,20 @@ describe('VendingMachine', () => {
 
     expect(vendingMachine.getProducts()).to.equal(products);
   });
+
+  it('should save change on initialization', () => {
+    const change = {
+      0.01: 10,
+      0.02: 20,
+      0.05: 30,
+      0.10: 40,
+      0.20: 50,
+      0.50: 60,
+      1: 10,
+      2: 5,
+    }
+    const vendingMachine = new VendingMachine(null, change);
+
+    expect(vendingMachine.getChange()).to.equal(change);
+  });
 });
