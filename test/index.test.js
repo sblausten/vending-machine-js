@@ -1,12 +1,15 @@
 const expect = require('chai').expect;
-const sinon = require('sinon');
-const sandbox = sinon.createSandbox();
-const notImplemented = require('../src/index');
+const VendingMachine = require('../src/index');
 
-describe('notImplemented', () => {
-  it('should return null', () => {
-    const result = notImplemented();
+describe('VendingMachine', () => {
 
-    expect(result).to.equal(null);
+  it('should save products on initialization', () => {
+    const products = [
+      { id: "crisps", price: 0.5, quantity: 3 },
+      { id: "chocolate", price: 1, quantity: 5 }
+    ]
+    const vendingMachine = new VendingMachine(products);
+
+    expect(vendingMachine.getProducts()).to.equal(products);
   });
 });

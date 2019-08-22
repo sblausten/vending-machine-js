@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "mocha": "^6.2.0",
+    "mock-stdin": "^0.3.1",
     "sinon": "^7.3.2"
   },
   "scripts": {
