@@ -14,15 +14,15 @@ class VendingMachine {
     this.addChange(change);
   }
 
-  addChange(newChange: Array<string>) {
+  addChange(newChange: Array<string>): void {
     if(newChange) this.changeMachine.addChange(newChange);
   };
 
-  getProducts() {
+  getProducts(): Array<Product> {
     return this.products;
   };
 
-  viewChangeRemaining() {
+  viewChangeRemaining(): Array<string> {
     return this.changeMachine.getChangeRemaining();
   };
 
