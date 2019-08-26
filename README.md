@@ -17,18 +17,20 @@ inserted, the vending machine should return the correct product.
 - It should also return change if too much money is provided, or ask for 
 more money if insufficient funds have been inserted.
 
-As a customer,
-- I can receive a product
+##### As an admin:
+1. I will load a new vending machine with products and change
+
+##### As a customer:
+2. I can receive a product
 if I select it and add coins that equal its cost
 
-- I will be asked for more coins
+3. I will be asked for more coins
 if I the coins I add are less than the value of the product selected
 
-- I will receive change
+3. I will receive change
 if I add coins more than the value of the product selected
 
-As an admin
-- I will load a new vending machine with products and change
+
 
 ### To Run programme:
 
