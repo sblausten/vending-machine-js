@@ -17,12 +17,26 @@ inserted, the vending machine should return the correct product.
 - It should also return change if too much money is provided, or ask for 
 more money if insufficient funds have been inserted.
 
+As a customer,
+- I can receive a product
+if I select it and add coins that equal its cost
+
+- I will be asked for more coins
+if I the coins I add are less than the value of the product selected
+
+- I will receive change
+if I add coins more than the value of the product selected
+
+As an admin
+- I will load a new vending machine with products and change
+
 ### To Run programme:
 
 Inside this directory:
 ```
 npm i
-npm run
+npm run build
+npm start
 
 ```
 

@@ -10,13 +10,17 @@
     "chai": "^4.2.0"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
     "mocha": "^6.2.0",
-    "mock-stdin": "^0.3.1",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   },
   "scripts": {
-    "run": "node src/index.js",
-    "test": "mocha test/*.js"
+    "run": "node built/index.js",
+    "test": "mocha --require ts-node/register \"test/**/*.{ts,tsx}\"",
+    "clean": "rm -rf ./built",
+    "build": "npm run clean && tsc"
   },
   "author": "sblausten",
   "license": "ISC"
