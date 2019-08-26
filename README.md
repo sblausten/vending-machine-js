@@ -18,7 +18,7 @@ inserted, the vending machine should return the correct product.
 more money if insufficient funds have been inserted.
 
 ##### As an admin:
-1. I will load a new vending machine with products and change
+1. I can load a new vending machine with products and change
 
 ##### As a customer:
 2. I can receive a product
@@ -28,26 +28,45 @@ if I select it and add coins that equal its cost
 if I the coins I add are less than the value of the product selected
 
 3. I will receive change
-if I add coins more than the value of the product selected
+if I add coins more than the value of the product selected and change is 
+available
 
 
+### Implementation:
 
-### To Run programme:
+I started by using Node and then added Typescript when it became 
+clear that having Static typing would be very helpful for the nature of 
+the programme. 
+
+I did not implement an interface as this was not indicated by the 
+requirements. 
+
+I throw three custom exceptions that must be handled by the 
+implementing client (external api / gui).
+
+I do not mock or stub in my tests as I wanted to test the api of each 
+behavioral unit rather than each file or class unit. 
+
+I used the factory pattern for product creation to abstract away the 
+instantiation of Products and allow for future extensibility such as 
+validation and adding additional product category types. However this 
+decision is probably a good example of premature optimisation. I've left 
+it in anyway. 
+
+### To build programme:
 
 Inside this directory:
 ```
 npm i
 npm run build
-npm start
 
 ```
 
-### To Run tests:
+### To run tests:
 
 Inside this directory:
 ```
 npm i
 npm i -g mocha
-mocha
+npm test
 ```
-

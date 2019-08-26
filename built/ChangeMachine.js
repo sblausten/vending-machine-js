@@ -1,25 +1,41 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Coins_1 = require("./types/Coins");
+const CustomErrors_1 = require("./errors/CustomErrors");
+const ChangeCalculator_1 = __importDefault(require("./ChangeCalculator"));
 class ChangeMachine {
     constructor() {
-        this.change = new Map();
+        this.changeAvailable = new Map();
+    }
+    getPurchaseChange(money, price) {
+        const totalMoneySupplied = money.map(coin => Coins_1.Coins[coin])
+            .reduce((a, b) => a + b);
+        if (totalMoneySupplied < price)
+            throw new CustomErrors_1.NotEnoughChangeGivenError();
+        if (totalMoneySupplied === price)
+            return [];
+        if (totalMoneySupplied > price) {
+            return ChangeCalculator_1.default.getChange(totalMoneySupplied, price, this.changeAvailable);
+        }
     }
     addChange(coins) {
         coins.forEach((displayCoin) => {
             const coin = Coins_1.Coins[displayCoin];
-            const existingCoinCount = this.change.get(coin);
+            const existingCoinCount = this.changeAvailable.get(coin);
             existingCoinCount ?
-                this.change.set(coin, existingCoinCount + 1) :
-                this.change.set(coin, 1);
+                this.changeAvailable.set(coin, existingCoinCount + 1) :
+                this.changeAvailable.set(coin, 1);
         });
     }
-    getChange() {
-        return this.change;
+    getCurrentChange() {
+        return this.changeAvailable;
     }
     getChangeRemaining() {
         let changeRemaining = [];
-        this.change.forEach((quantity, coin) => {
+        this.changeAvailable.forEach((quantity, coin) => {
             for (let i = 0; i < quantity; i++) {
                 changeRemaining.push(Coins_1.Coins[coin]);
             }

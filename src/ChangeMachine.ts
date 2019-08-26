@@ -1,33 +1,46 @@
-import { Coins } from "./types/Coins";
+import {Coins} from "./types/Coins";
+import {NotEnoughChangeGivenError} from "./errors/CustomErrors";
+import ChangeCalculator from "./ChangeCalculator";
 
 export default class ChangeMachine {
 
-  change: Map<Coins, number>;
+  changeAvailable: Map<Coins, number>;
 
   constructor() {
-    this.change = new Map<Coins, number>()
+    this.changeAvailable = new Map<Coins, number>()
+  }
+
+  getPurchaseChange(money: Array<string>, price: number): Array<string> {
+    const totalMoneySupplied: number = money.map(coin => Coins[coin])
+      .reduce((a, b) => a + b);
+
+    if (totalMoneySupplied < price) throw new NotEnoughChangeGivenError();
+    if (totalMoneySupplied === price) return [];
+    if (totalMoneySupplied > price) {
+      return ChangeCalculator.getChange(totalMoneySupplied, price, this.changeAvailable);
+    }
   }
 
   addChange(coins: Array<string>): void {
     coins.forEach((displayCoin: string) => {
       const coin = Coins[displayCoin];
-      const existingCoinCount = this.change.get(coin);
+      const existingCoinCount = this.changeAvailable.get(coin);
 
       existingCoinCount ?
-          this.change.set(coin, existingCoinCount + 1) :
-          this.change.set(coin, 1);
+          this.changeAvailable.set(coin, existingCoinCount + 1) :
+          this.changeAvailable.set(coin, 1);
     });
   }
 
-  getChange(): Map<Coins, number> {
-    return this.change;
+  getCurrentChange(): Map<Coins, number> {
+    return this.changeAvailable;
   }
 
   getChangeRemaining(): Array<string> {
     let changeRemaining: Array<string> = [];
-    this.change.forEach((quantity: number, coin: Coins) => {
+    this.changeAvailable.forEach((quantity: number, coin: Coins) => {
 
-      for(let i = 0; i < quantity; i++) {
+      for (let i = 0; i < quantity; i++) {
         changeRemaining.push(Coins[coin])
       }
     });
