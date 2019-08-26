@@ -14,6 +14,13 @@ class VendingMachine {
     this.addChange(change);
   }
 
+  buyProduct(productName: string , money: Array<string>): Product {
+
+    const product = this.products.find((product) => product.name === productName);
+    if(product) return product;
+    throw new Error('Product not found')
+  }
+
   addChange(newChange: Array<string>): void {
     if(newChange) this.changeMachine.addChange(newChange);
   };

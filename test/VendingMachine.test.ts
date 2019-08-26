@@ -60,4 +60,49 @@ describe.only('VendingMachine', () => {
       expect(vendingMachine.viewChangeRemaining()).to.deep.equal(expectedChangeRemaining);
     });
   });
+
+  describe('buyProduct', () => {
+    it('should return product if exact change added and product available', () => {
+      const money = [ "50p" ];
+      const products = [
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("chocolate", 1)
+      ];
+      const vendingMachine = new VendingMachine(products, money, changeMachine);
+
+      const product = vendingMachine.buyProduct("crisps", money);
+
+      expect(product.name).to.equal("crisps");
+      expect(product.price).to.equal(0.5);
+    });
+
+    it('should return product if multiple coins added and product available', () => {
+      const money = [ "50p", "50p" ];
+      const products = [
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("chocolate", 1)
+      ];
+      const vendingMachine = new VendingMachine(products, money, changeMachine);
+
+      const product = vendingMachine.buyProduct("chocolate", money);
+
+      expect(product.name).to.equal("chocolate");
+      expect(product.price).to.equal(1);
+    });
+
+    it('should throw ProductNotFound if product name does not match current products available', () => {
+      const money = [ "50p", "50p" ];
+      const products = [
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("crisps", 0.5),
+        ProductFactory.create("chocolate", 1)
+      ];
+      const vendingMachine = new VendingMachine(products, money, changeMachine);
+
+      expect(() => vendingMachine.buyProduct("sweets", money)).to.throw('Product not found');
+    });
+
+  });
 });
